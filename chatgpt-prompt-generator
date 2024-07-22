@@ -1,0 +1,44 @@
+#chatgpt-prompt-generator
+#!/bin/bash
+#written by Joe Seanor
+# Function to ask questions and capture responses
+ask_question() {
+    local question=$1
+    echo -n "$question: "
+    read -r answer
+    echo "$answer"
+}
+
+# Welcome message
+echo "Welcome to the ChatGPT Prompt Generator"
+
+# Ask a series of questions to get a better prompt
+topic=$(ask_question "What is the main topic of your query to chatgpt?")
+context=$(ask_question "Please provide some context or background information?")
+details=$(ask_question "What specific details or subtopics should be included in your response?")
+goal=$(ask_question "What is the goal or purpose of the query")
+style=$(ask_question "What style should the response have in it? (formal, casual, technical)")
+
+# Construct the prompt
+prompt="Topic: $topic
+Context: $context
+Details: $details
+Goal: $goal
+Style: $style"
+
+# Output the constructed prompt
+echo -e "\nHere is the Generated ChatGPT Prompt:"
+echo "$prompt"
+
+# Optionally save the prompt to a file
+echo -n "Do you want to save this prompt to a file? (yes/no): "
+read -r save
+if [ "$save" = "yes" ]; then
+    echo -n "Enter the filename: "
+    read -r filename
+    echo "$prompt" > "$filename"
+    echo "Prompt saved to $filename"
+fi
+
+# End message
+echo "You can now copy and paste the generated prompt into ChatGPT."
